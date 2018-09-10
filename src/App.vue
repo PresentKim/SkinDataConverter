@@ -15,4 +15,9 @@
 
 <style lang="scss">
 	@import "nord.scss";
+
+	body {
+		background-color: $nord0;
+		color: $nord8;
+	}
 </style>
