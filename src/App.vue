@@ -14,4 +14,5 @@
 </script>
 
 <style lang="scss">
+	@import "nord.scss";
 </style>
