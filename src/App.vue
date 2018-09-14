@@ -61,8 +61,8 @@
 										png.data[index] = png.data[index] ? 255 : 0;
 									}
 								}
-								this.filename = file.name;
 								this.png = png;
+								this.filename = file.name;
 							});
 						};
 					} else if (/\.skindata/i.test(file.name)) { //Convert .skindata to .png
@@ -74,9 +74,9 @@
 								return;
 							}
 							let png = new PNG({...size, filterType: 4});
-							this.filename = file.name;
 							png.data = skindata;
 							this.png = png;
+							this.filename = file.name;
 						};
 					} else {
 						console.error(`Error : Invalid file format (Required .png or .skindata`);
