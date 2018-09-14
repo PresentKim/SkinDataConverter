@@ -9,6 +9,7 @@
 				<span id="skin-size"> ({{ this.png.height }}x{{ this.png.width }}) </span> <br/>
 				<span class="fake-button" @click="download($event, true)">PNG</span>
 				<span class="fake-button" @click="download($event, false)">SKINDATA</span>
+				<span v-if="png.data.length === 1024" class="fake-button" @click="toOreMonster">toOreMonster</span>
 			</div>
 			<div v-else>
 				<font-awesome-icon id="icon" icon="download"/>
@@ -132,8 +133,32 @@
 				anchor.remove();
 				window.URL.revokeObjectURL(url);
 			},
+			toOreMonster(event) {
+				event.preventDefault();
+				let newData = new Uint8Array(16384); //64 * 64 * 4
+				[{x: 16, y: 0}, {x: 0, y: 16}, {x: 16, y: 16}, {x: 32, y: 16}].forEach(point => {
+					for (let x = 0; x < this.png.width; ++x) {
+						for (let y = 0; y < this.png.height; ++y) {
+							let index = (this.png.width * y + x) << 2;
+							let newIndex = ((this.png.width * 4) * (point.y + y) + (point.x + x)) << 2;
+
+							let r = this.png.data[index++];
+							let g = this.png.data[index++];
+							let b = this.png.data[index++];
+							let a = this.png.data[index];
+							newData[newIndex++] = r;
+							newData[newIndex++] = g;
+							newData[newIndex++] = b;
+							newData[newIndex] = a;
+						}
+					}
+				});
+				this.png.width = this.png.height = 64;
+				this.png.data = newData;
+			},
 			getSizeByLength(length) {
 				const map = {
+					1024: {width: 16, height: 16}, //16 * 16 * 4
 					8192: {width: 64, height: 32}, //64 * 32 * 4
 					16384: {width: 64, height: 64}, //64 * 64 * 4
 					65536: {width: 128, height: 128}, //128 * 128 * 4
