@@ -49,18 +49,6 @@
 									console.error(`Error : Invalid skin png format (${png.height}x${png.width} is invalid size)`);
 									return;
 								}
-								for (let x = 0; x < png.width; x++) {
-									for (let y = 0; y < png.height; y++) {
-										let index = (png.width * y + x) << 2;
-
-										// store r,g,b
-										png.data[index] = png.data[index++];
-										png.data[index] = png.data[index++];
-										png.data[index] = png.data[index++];
-										// store a with simplify
-										png.data[index] = png.data[index] ? 255 : 0;
-									}
-								}
 								this.png = png;
 								this.filename = file.name;
 							});
