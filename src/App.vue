@@ -136,7 +136,7 @@
 			toOreMonster(event) {
 				event.preventDefault();
 				let newData = new Uint8Array(16384); //64 * 64 * 4
-				[{x: 16, y: 0}, {x: 0, y: 16}, {x: 16, y: 16}, {x: 32, y: 16}].forEach(point => {
+				[{x: 16, y: 0},{x: 32, y: 0}, {x: 0, y: 16}, {x: 16, y: 16}, {x: 32, y: 16}, {x: 48, y: 16}].forEach(point => {
 					for (let x = 0; x < this.png.width; ++x) {
 						for (let y = 0; y < this.png.height; ++y) {
 							let index = (this.png.width * y + x) << 2;
