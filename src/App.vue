@@ -2,7 +2,7 @@
 	<div id="app">
 		<input id="input" type="file" @change="onFileChange" accept=".png,.skindata" class="hidden">
 
-		<label id="inputBox" for="input">
+		<label for="input">
 			<img v-if="previewSrc" :src="previewSrc" alt="preview"/>
 			<div v-if="!png">
 				<span> Select a file or drag here</span> <br/>
@@ -131,7 +131,7 @@
 			display: none;
 		}
 
-		#inputBox {
+		label {
 			display: block;
 			text-align: center;
 			width: 100%;
