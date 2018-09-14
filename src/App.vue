@@ -5,6 +5,7 @@
 		<label for="input" :class="{hover: dragType === `hover`}" @dragover="onDragEvent($event)" @dragleave="onDragEvent($event)" @drop="onDragEvent($event)">
 			<div v-if="png">
 				<img :src="previewSrc" alt="preview"/> <br/>
+				<span id="filename"> {{ filename }} </span> <br/>
 				<span class="fake-button" @click="download($event, true)">PNG</span>
 				<span class="fake-button" @click="download($event, false)">SKINDATA</span>
 			</div>
