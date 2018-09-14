@@ -3,12 +3,12 @@
 		<input id="input" type="file" @change="onFileChange" accept=".png,.skindata" class="hidden">
 
 		<label for="input" :class="{hover: dragType === `hover`}" @dragover="onDragEvent($event)" @dragleave="onDragEvent($event)" @drop="onDragEvent($event)">
-			<img v-if="previewSrc" :src="previewSrc" alt="preview"/>
 			<div v-if="!png">
 				<span> Select a file or drag here</span> <br/>
 				<span class="fake-button">Select a file</span><br/>
 			</div>
 			<div v-else>
+				<img :src="previewSrc" alt="preview"/> <br/>
 				<span class="fake-button" @click="download($event, true)">PNG</span>
 				<span class="fake-button" @click="download($event, false)">SKINDATA</span>
 			</div>
