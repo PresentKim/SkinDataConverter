@@ -143,6 +143,13 @@
 				border-color: $nord8;
 			}
 
+			img {
+				width: 300px;
+				height: 300px;
+				margin: 10px;
+				border: 3px solid $nord8;
+			}
+
 			.fake-button {
 				display: inline-block;
 				background: $nord8;
