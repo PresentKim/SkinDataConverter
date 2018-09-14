@@ -133,8 +133,8 @@
 			text-align: center;
 			width: 100%;
 			max-width: 600px;
-			min-height: 100px;
 			margin: 0 auto;
+			padding: 100px 0;
 			border-radius: 7px;
 			border: 3px solid $nord4;
 			transition: all .2s ease;
@@ -147,7 +147,6 @@
 			img {
 				width: 300px;
 				height: 300px;
-				margin: 10px 0 0 0;
 				border: 3px solid $nord8;
 			}
 
