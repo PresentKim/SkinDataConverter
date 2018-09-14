@@ -3,9 +3,15 @@
 		<input id="input" type="file" @change="onFileChange" accept=".png,.skindata" class="hidden">
 
 		<label id="inputBox" for="input">
-			<img v-if="png" :src="previewSrc" alt="preview"/>
-			<span v-if="!png"> Select a file or drag here</span> <br/>
-			<span v-if="!png" class="fake-button">Select a file</span><br/>
+			<img v-if="previewSrc" :src="previewSrc" alt="preview"/>
+			<div v-if="!png">
+				<span> Select a file or drag here</span> <br/>
+				<span class="fake-button">Select a file</span><br/>
+			</div>
+			<div v-else>
+				<span class="fake-button" @click="download($event, true)">PNG</span>
+				<span class="fake-button" @click="download($event, false)">SKINDATA</span>
+			</div>
 		</label>
 	</div>
 </template>
@@ -17,6 +23,7 @@
 		name: 'app',
 		data() {
 			return {
+				filename: null,
 				png: null
 			}
 		},
@@ -54,8 +61,8 @@
 										png.data[index] = png.data[index] ? 255 : 0;
 									}
 								}
+								this.filename = file.name;
 								this.png = png;
-								this.downloadBuffer(png.data, file.name.replace(/\.png$/i, `.skindata`), `application/octet-stream`);
 							});
 						};
 					} else if (/\.skindata/i.test(file.name)) { //Convert .skindata to .png
@@ -67,9 +74,9 @@
 								return;
 							}
 							let png = new PNG({...size, filterType: 4});
+							this.filename = file.name;
 							png.data = skindata;
 							this.png = png;
-							this.downloadBuffer(PNG.sync.write(png, {filterType: 4}), file.name.replace(/\.skindata/i, `.png`), `image/png`);
 						};
 					} else {
 						console.error(`Error : Invalid file format (Required .png or .skindata`);
@@ -78,7 +85,18 @@
 					reader.readAsArrayBuffer(file);
 				}
 			},
-			downloadBuffer(buffer, filename, type) {
+			download(event, isPNG) {
+				event.preventDefault();
+				let buffer, type, filename;
+				if (isPNG) {
+					buffer = PNG.sync.write(this.png, {filterType: 4});
+					type = `image/png`;
+					filename = this.filename.replace(/\.skindata$/i, `.png`);
+				} else {
+					buffer = this.png.data;
+					type = `application/octet-stream`;
+					filename = this.filename.replace(/\.png$/i, `.skindata`);
+				}
 				let blob = new Blob([buffer], {type});
 				let url = window.URL.createObjectURL(blob);
 				let anchor = document.createElement('a');
