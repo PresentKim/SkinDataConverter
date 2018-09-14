@@ -4,6 +4,8 @@
 </template>
 
 <script>
+	import {PNG} from 'pngjs';
+
 	export default {
 		name: 'app',
 		data() {

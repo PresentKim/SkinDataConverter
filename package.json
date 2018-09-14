@@ -12,6 +12,7 @@
 	"dependencies": {
 		"babel-polyfill": "^6.26.0",
 		"event-source-polyfill": "0.0.16",
+		"pngjs": "^3.3.3",
 		"vue": "^2.5.11"
 	},
 	"browserslist": [
