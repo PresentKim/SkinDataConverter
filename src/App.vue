@@ -5,7 +5,8 @@
 		<label for="input" :class="{hover: dragType === `hover`}" @dragover="onDragEvent" @dragleave="onDragEvent" @drop="onDragEvent">
 			<div v-if="png">
 				<div id="preview" :class="{small: this.png.height === 32}" v-html="previewSVG"></div>
-				<span id="filename"> {{ filename }} </span> <br/>
+				<span id="filename"> {{ filename }} </span>
+				<span id="skin-size"> ({{ this.png.height }}x{{ this.png.width }}) </span> <br/>
 				<span class="fake-button" @click="download($event, true)">PNG</span>
 				<span class="fake-button" @click="download($event, false)">SKINDATA</span>
 			</div>
@@ -180,6 +181,11 @@
 				&.small {
 					height: 150px;
 				}
+			}
+
+			#skin-size {
+				font-size: 16pt;
+				color: $nord3;
 			}
 
 			#icon {
