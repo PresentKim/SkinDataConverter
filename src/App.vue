@@ -1,6 +1,7 @@
 <template>
 	<div id="app">
 		<input type="file" @change="onFileChange">
+		<img v-if="previewSrc" :src="previewSrc" alt="preview"/>
 	</div>
 </template>
 
@@ -10,12 +11,20 @@
 	export default {
 		name: 'app',
 		data() {
-			return {}
+			return {
+				png: null
+			}
+		},
+		computed: {
+			previewSrc() {
+				return this.png ? `data:image/png;base64,${btoa(String.fromCharCode.apply(null, PNG.sync.write(this.png, {filterType: 4})))}` : null;
+			}
 		},
 		methods: {
 			onFileChange(event) {
 				let files = event.target.files || event.dataTransfer.files;
 				if (files.length) {
+					this.png = null;
 					let file = files[0];
 					let reader = new FileReader();
 					if (/\.png$/i.test(file.name)) { //Convert .png to .skindata
@@ -40,6 +49,7 @@
 										png.data[index] = png.data[index] ? 255 : 0;
 									}
 								}
+								this.png = png;
 								this.downloadBuffer(png.data, file.name.replace(/\.png$/i, `.skindata`), `application/octet-stream`);
 							});
 						};
@@ -53,6 +63,7 @@
 							}
 							let png = new PNG({...size, filterType: 4});
 							png.data = skindata;
+							this.png = png;
 							this.downloadBuffer(PNG.sync.write(png, {filterType: 4}), file.name.replace(/\.skindata/i, `.png`), `image/png`);
 						};
 					} else {
