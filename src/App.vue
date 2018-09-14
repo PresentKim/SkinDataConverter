@@ -4,7 +4,7 @@
 
 		<label for="input" :class="{hover: dragType === `hover`}" @dragover="onDragEvent" @dragleave="onDragEvent" @drop="onDragEvent">
 			<div v-if="png">
-				<div id="preview" v-html="previewSVG"></div>
+				<div id="preview" :class="{small: this.png.height === 32}" v-html="previewSVG"></div>
 				<span id="filename"> {{ filename }} </span> <br/>
 				<span class="fake-button" @click="download($event, true)">PNG</span>
 				<span class="fake-button" @click="download($event, false)">SKINDATA</span>
@@ -36,7 +36,7 @@
 				let xmlns = `http://www.w3.org/2000/svg`;
 				let svg = document.createElementNS(xmlns, `svg`);
 				svg.setAttribute(`width`, `300`);
-				svg.setAttribute(`height`, `300`);
+				svg.setAttribute(`height`, this.png.height === 32 ? `150` : `300`);
 				svg.setAttribute(`viewBox`, `0 0 ${this.png.width} ${this.png.height}`);
 
 				let baseRect = document.createElementNS(xmlns, `rect`);
@@ -176,6 +176,10 @@
 				height: 300px;
 				border: 3px solid $nord8;
 				margin: 0 auto;
+
+				&.small {
+					height: 150px;
+				}
 			}
 
 			#icon {
