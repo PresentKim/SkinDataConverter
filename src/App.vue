@@ -44,7 +44,18 @@
 								this.downloadBuffer(buffer, file.name.replace(/\.png$/i, `.skindata`), `application/octet-stream`);
 							});
 						};
-					} else if (/\.skindata/i.test(file.name)) { //TODO: Convert .skindata to .png
+					} else if (/\.skindata/i.test(file.name)) { //Convert .skindata to .png
+						reader.onload = () => {
+							let skindata = new Uint8Array(reader.result);
+							let size = this.getSizeByLength(skindata.length);
+							if (size === undefined) {
+								console.error(`Error : Invalid skin data format (${skindata.length} is invalid size)`);
+								return;
+							}
+							let png = new PNG({...size, filterType: 4});
+							png.data = skindata;
+							this.downloadBuffer(PNG.sync.write(png, {filterType: 4}), file.name.replace(/\.skindata/i, `.png`), `image/png`);
+						};
 					} else {
 						console.error(`Error : Invalid file format (Required .png or .skindata`);
 						return;
