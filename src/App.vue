@@ -1,5 +1,6 @@
 <template>
 	<div id="app">
+		<input type="file" @change="onFileChange">
 	</div>
 </template>
 
@@ -9,7 +10,10 @@
 	export default {
 		name: 'app',
 		data() {
-			return {
+			return {}
+		},
+		methods: {
+			onFileChange(event) {
 			}
 		}
 	}
