@@ -2,7 +2,7 @@
 	<div id="app">
 		<input id="input" type="file" @change="onFileChange" accept=".png,.skindata" class="hidden">
 
-		<label for="input">
+		<label for="input" :class="{hover: dragType === `hover`}" @dragover="onDragEvent($event)" @dragleave="onDragEvent($event)" @drop="onDragEvent($event)">
 			<img v-if="previewSrc" :src="previewSrc" alt="preview"/>
 			<div v-if="!png">
 				<span> Select a file or drag here</span> <br/>
@@ -24,7 +24,8 @@
 		data() {
 			return {
 				filename: null,
-				png: null
+				png: null,
+				dragType: null
 			}
 		},
 		computed: {
@@ -71,6 +72,13 @@
 						return;
 					}
 					reader.readAsArrayBuffer(file);
+				}
+			},
+			onDragEvent(event) {
+				event.preventDefault();
+				this.dragType = event.type;
+				if (event.type === `drop`) {
+					this.onFileChange(event);
 				}
 			},
 			download(event, isPNG) {
@@ -131,7 +139,7 @@
 			transition: all .2s ease;
 			user-select: none;
 
-			&:hover {
+			&:hover, &.hover {
 				border-color: $nord8;
 			}
 
