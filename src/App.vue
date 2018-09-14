@@ -1,7 +1,12 @@
 <template>
 	<div id="app">
-		<input type="file" @change="onFileChange" accept=".png,.skindata">
-		<img v-if="previewSrc" :src="previewSrc" alt="preview"/>
+		<input id="input" type="file" @change="onFileChange" accept=".png,.skindata" class="hidden">
+
+		<label id="inputBox" for="input">
+			<img v-if="png" :src="previewSrc" alt="preview"/>
+			<span v-if="!png"> Select a file or drag here</span> <br/>
+			<span v-if="!png" class="fake-button">Select a file</span><br/>
+		</label>
 	</div>
 </template>
 
@@ -102,6 +107,46 @@
 	body {
 		background-color: $nord0;
 		color: $nord8;
-		text-align: center;
+		font-size: 20pt;
+
+		#input {
+			display: none;
+		}
+
+		#inputBox {
+			display: block;
+			text-align: center;
+			width: 100%;
+			max-width: 600px;
+			min-height: 100px;
+			margin: 0 auto;
+			border-radius: 7px;
+			border: 3px solid $nord4;
+			transition: all .2s ease;
+			user-select: none;
+
+			&:hover {
+				border-color: $nord8;
+			}
+
+			.fake-button {
+				display: inline-block;
+				background: $nord8;
+				margin: 10px;
+				padding: 0 20px;
+				height: 36px;
+				line-height: 36px;
+				color: $nord6;
+				font-weight: bold;
+				font-size: 16px;
+				border-radius: 5px;
+				cursor: pointer;
+				transition: all .2s ease;
+
+				&:hover {
+					background: $nord10;
+				}
+			}
+		}
 	}
 </style>
