@@ -10,8 +10,10 @@
 				<span class="fake-button" @click="download($event, false)">SKINDATA</span>
 			</div>
 			<div v-else>
+				<font-awesome-icon id="icon" icon="download"/>
+				<br/>
 				<span> Select a file or drag here</span> <br/>
-				<span class="fake-button">Select a file</span><br/>
+				<span class="fake-button">Select a file</span> <br/>
 			</div>
 		</label>
 	</div>
@@ -150,6 +152,10 @@
 				border: 3px solid $nord8;
 			}
 
+			#icon {
+				display: inline-block;
+				font-size: 100pt;
+			}
 			.fake-button {
 				display: inline-block;
 				background: $nord8;
