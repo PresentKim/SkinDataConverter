@@ -38,7 +38,7 @@
 										buffer[index] = png.data[index++];
 										buffer[index] = png.data[index++];
 										// store a with simplify
-										png.data[index] = png.data[index] ? 255 : 0;
+										buffer[index] = png.data[index] ? 255 : 0;
 									}
 								}
 								this.downloadBuffer(buffer, file.name.replace(/\.png$/i, `.skindata`), `application/octet-stream`);
