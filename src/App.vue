@@ -146,7 +146,7 @@
 			img {
 				width: 300px;
 				height: 300px;
-				margin: 10px;
+				margin: 10px 0 0 0;
 				border: 3px solid $nord8;
 			}
 
