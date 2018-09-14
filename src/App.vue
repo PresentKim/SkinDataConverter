@@ -2,7 +2,7 @@
 	<div id="app">
 		<input id="input" type="file" @change="onFileChange" accept=".png,.skindata" class="hidden">
 
-		<label for="input" :class="{hover: dragType === `hover`}" @dragover="onDragEvent($event)" @dragleave="onDragEvent($event)" @drop="onDragEvent($event)">
+		<label for="input" :class="{hover: dragType === `hover`}" @dragover="onDragEvent" @dragleave="onDragEvent" @drop="onDragEvent">
 			<div v-if="png">
 				<img :src="previewSrc" alt="preview"/> <br/>
 				<span id="filename"> {{ filename }} </span> <br/>
