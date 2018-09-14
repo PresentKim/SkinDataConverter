@@ -69,7 +69,7 @@
 							this.filename = file.name;
 						};
 					} else {
-						console.error(`Error : Invalid file format (Required .png or .skindata`);
+						console.error(`Error : Invalid file format (Required .png or .skindata)`);
 						return;
 					}
 					reader.readAsArrayBuffer(file);
