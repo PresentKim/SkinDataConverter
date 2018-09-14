@@ -4,7 +4,7 @@
 
 		<label for="input" :class="{hover: dragType === `hover`}" @dragover="onDragEvent" @dragleave="onDragEvent" @drop="onDragEvent">
 			<div v-if="png">
-				<img :src="previewSrc" alt="preview"/> <br/>
+				<div id="preview" v-html="previewSVG"></div>
 				<span id="filename"> {{ filename }} </span> <br/>
 				<span class="fake-button" @click="download($event, true)">PNG</span>
 				<span class="fake-button" @click="download($event, false)">SKINDATA</span>
@@ -32,8 +32,33 @@
 			}
 		},
 		computed: {
-			previewSrc() {
-				return this.png ? `data:image/png;base64,${btoa(String.fromCharCode.apply(null, PNG.sync.write(this.png, {filterType: 4})))}` : null;
+			previewSVG() {
+				let xmlns = `http://www.w3.org/2000/svg`;
+				let svg = document.createElementNS(xmlns, `svg`);
+				svg.setAttribute(`width`, `300`);
+				svg.setAttribute(`height`, `300`);
+				svg.setAttribute(`viewBox`, `0 0 ${this.png.width} ${this.png.height}`);
+
+				let baseRect = document.createElementNS(xmlns, `rect`);
+				baseRect.setAttribute(`width`, `1`);
+				baseRect.setAttribute(`height`, `1`);
+				for (let x = 0; x < this.png.width; x++) {
+					for (let y = 0; y < this.png.height; y++) {
+						let index = (this.png.width * y + x) << 2;
+
+						let r = this.png.data[index++];
+						let g = this.png.data[index++];
+						let b = this.png.data[index++];
+						if (this.png.data[index] !== 0) {
+							let rect = baseRect.cloneNode();
+							rect.setAttribute(`fill`, `#${(`0${r.toString(16)}`).slice(-2)}${(`0${g.toString(16)}`).slice(-2)}${(`0${b.toString(16)}`).slice(-2)}`);
+							rect.setAttribute(`x`, `${x}`);
+							rect.setAttribute(`y`, `${y}`);
+							svg.appendChild(rect);
+						}
+					}
+				}
+				return svg.outerHTML;
 			}
 		},
 		methods: {
@@ -146,16 +171,18 @@
 				border-color: $nord8;
 			}
 
-			img {
+			#preview {
 				width: 300px;
 				height: 300px;
 				border: 3px solid $nord8;
+				margin: 0 auto;
 			}
 
 			#icon {
 				display: inline-block;
 				font-size: 100pt;
 			}
+
 			.fake-button {
 				display: inline-block;
 				background: $nord8;
