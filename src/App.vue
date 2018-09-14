@@ -24,6 +24,10 @@
 								if (err) {
 									console.error(err);
 									return;
+								} else if (this.getSizeByLength(png.width * png.height * 4) === undefined) {
+									console.error(`Error : Invalid skin png format (${png.height}x${png.width} is invalid size)`);
+									return;
+								}
 								let buffer = new Uint8Array(png.width * png.height * 4);
 								for (let x = 0; x < png.width; x++) {
 									for (let y = 0; y < png.height; y++) {
@@ -58,6 +62,14 @@
 				anchor.click();
 				anchor.remove();
 				window.URL.revokeObjectURL(url);
+			},
+			getSizeByLength(length) {
+				const map = {
+					8192: {width: 64, height: 32}, //64 * 32 * 4
+					16384: {width: 64, height: 64}, //64 * 64 * 4
+					65536: {width: 128, height: 128}, //128 * 128 * 4
+				};
+				return map[length];
 			}
 		}
 	}
