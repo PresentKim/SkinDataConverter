@@ -102,5 +102,6 @@
 	body {
 		background-color: $nord0;
 		color: $nord8;
+		text-align: center;
 	}
 </style>
