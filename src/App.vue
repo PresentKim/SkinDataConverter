@@ -28,20 +28,19 @@
 									console.error(`Error : Invalid skin png format (${png.height}x${png.width} is invalid size)`);
 									return;
 								}
-								let buffer = new Uint8Array(png.width * png.height * 4);
 								for (let x = 0; x < png.width; x++) {
 									for (let y = 0; y < png.height; y++) {
 										let index = (png.width * y + x) << 2;
 
 										// store r,g,b
-										buffer[index] = png.data[index++];
-										buffer[index] = png.data[index++];
-										buffer[index] = png.data[index++];
+										png.data[index] = png.data[index++];
+										png.data[index] = png.data[index++];
+										png.data[index] = png.data[index++];
 										// store a with simplify
-										buffer[index] = png.data[index] ? 255 : 0;
+										png.data[index] = png.data[index] ? 255 : 0;
 									}
 								}
-								this.downloadBuffer(buffer, file.name.replace(/\.png$/i, `.skindata`), `application/octet-stream`);
+								this.downloadBuffer(png.data, file.name.replace(/\.png$/i, `.skindata`), `application/octet-stream`);
 							});
 						};
 					} else if (/\.skindata/i.test(file.name)) { //Convert .skindata to .png
