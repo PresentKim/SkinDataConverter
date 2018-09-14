@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<input type="file" @change="onFileChange">
+		<input type="file" @change="onFileChange" accept=".png,.skindata">
 		<img v-if="previewSrc" :src="previewSrc" alt="preview"/>
 	</div>
 </template>
